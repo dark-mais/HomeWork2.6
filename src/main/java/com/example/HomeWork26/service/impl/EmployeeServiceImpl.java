@@ -17,18 +17,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee add(String firstName, String lastName) {
-        if (employees.size() == EMPLOYEE_STORAGE_SIZE){
-            throw new EmployeeStorageIsFullException();
-        }
-
         Employee employee = new Employee(firstName, lastName);
-
-        if (employees.containsKey(employee.getFullName())) {
-            throw new EmployeeAlreadyAddedException();
-        }
-
-        employees.put(employee.getFirstName(), employee);
-
+        employees.put(employee.getFullName(), employee);
         return employee;
     }
 
@@ -59,5 +49,19 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Collection<Employee> findAll() {
         return employees.values();
+    }
+
+    private Employee add(Employee employee) {
+        if (employees.size() == EMPLOYEE_STORAGE_SIZE){
+            throw new EmployeeStorageIsFullException();
+        }
+
+        if (employees.containsKey(employee.getFullName())) {
+            throw new EmployeeAlreadyAddedException();
+        }
+
+        employees.put(employee.getFirstName(), employee);
+
+        return employee;
     }
 }

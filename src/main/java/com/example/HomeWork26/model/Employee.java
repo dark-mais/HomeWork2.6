@@ -1,53 +1,30 @@
 package com.example.HomeWork26.model;
 
-import java.util.Objects;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+import java.util.Objects;
+import java.util.Random;
+
+@Setter
+@Getter
+@EqualsAndHashCode
+@ToString
 public class Employee {
     private String firstName;
     private String lastName;
+    private int salary;
+    private int departmentID;
+    private String fullName = firstName + " " + lastName;
 
     public Employee(String firstName, String lastName) {
+        Random random = new Random();
+
         this.firstName = firstName;
         this.lastName = lastName;
+        this.salary = random.nextInt(300000) + 50000;
+        this.departmentID = random.nextInt(5) + 1;
     }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public Object getFullName() {
-        return firstName + " " + lastName;
-    }
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Employee employee)) return false;
-        return Objects.equals(getFirstName(), employee.getFirstName()) && Objects.equals(getLastName(), employee.getLastName());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getFirstName(), getLastName());
-    }
-
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                '}';
-    }
-
 }
