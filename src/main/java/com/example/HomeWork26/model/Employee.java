@@ -8,6 +8,9 @@ import lombok.ToString;
 import java.util.Objects;
 import java.util.Random;
 
+import static org.apache.commons.lang3.StringUtils.capitalize;
+
+
 @Setter
 @Getter
 @EqualsAndHashCode
@@ -22,8 +25,8 @@ public class Employee {
     public Employee(String firstName, String lastName) {
         Random random = new Random();
 
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.firstName = capitalize(firstName);
+        this.lastName = capitalize(lastName);
         this.salary = random.nextInt(300000) + 50000;
         this.departmentID = random.nextInt(5) + 1;
     }

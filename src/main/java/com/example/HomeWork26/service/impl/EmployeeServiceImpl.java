@@ -5,6 +5,7 @@ import com.example.HomeWork26.exception.EmployeeNotFoundException;
 import com.example.HomeWork26.exception.EmployeeStorageIsFullException;
 import com.example.HomeWork26.model.Employee;
 import com.example.HomeWork26.service.EmployeeService;
+import com.example.HomeWork26.service.EmployeeValidationService;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -14,6 +15,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private static final int EMPLOYEE_STORAGE_SIZE = 10;
     private final Map<String, Employee> employees = new HashMap<>();
+
+    private final EmployeeValidationService employeeValidationService;
+
+    public EmployeeServiceImpl(EmployeeValidationService employeeValidationService) {
+        this.employeeValidationService = employeeValidationService;
+    }
 
     @Override
     public Employee add(String firstName, String lastName) {
@@ -59,6 +66,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (employees.containsKey(employee.getFullName())) {
             throw new EmployeeAlreadyAddedException();
         }
+
+        employeeValidationService.validate(employee.getFirstName(), employee.getLastName());
 
         employees.put(employee.getFirstName(), employee);
 
